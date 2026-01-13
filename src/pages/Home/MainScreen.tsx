@@ -2,9 +2,8 @@ import { Button } from "@/components/ui/button"
 import {
   Card,
   CardAction,
-  CardContent,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import { Eye } from "lucide-react"
 import { Link } from "react-router"
@@ -12,22 +11,21 @@ import { Link } from "react-router"
 const cardData = [
   {
     id: 1,
-    name: "DSC Dashboard",
-    link: "/dsc-dashboard",
-    description: "View analytics and stats",
+    name: "DSC Registration",
+    link: "/dsc-register",
+    madeNot:true
   },
+  
   {
     id: 2,
-    name: "File Finder",
-    link: "/projects",
-    description: "Search and manage files",
-    madeNot:false
+    name: "DSC View & Manage",
+    link: "/dsc-manage",
+    madeNot:true
   },
   {
     id: 3,
-    name: "Settings",
-    link: "/settings",
-    description: "Update preferences",
+    name: "File Finder",
+    link: "/projects",
     madeNot:false
   },
 ]
@@ -54,11 +52,6 @@ const MainScreen = () => {
             
           </CardHeader>
 
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {item.description}
-            </p>
-          </CardContent>
         </Card>
       ))}
     </div>
