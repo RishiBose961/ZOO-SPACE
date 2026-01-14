@@ -12,11 +12,13 @@ import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { loadUser, loginUserAction } from "@/slice/authSlice"
 import { Navigate } from "react-router"
+import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment"
 export default function LoginForm() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
   const [error, setError] = useState("");
 
+  const { base_url } = CheckEnvironment();
   // const { base_url } = CheckEnvironment();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -34,7 +36,7 @@ export default function LoginForm() {
       email: string;
       password: string;
     }) => {
-      const response = await axios.post(`http://localhost:5000/api/users/login`, {
+      const response = await axios.post(`${base_url}/api/users/login`, {
         email,
         password,
       });

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment"
 
 interface RegisterPayload {
   fullName: string
@@ -21,10 +22,12 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string>("")
 
+   const { base_url } = CheckEnvironment();
+
   const registerMutation = useMutation({
     mutationFn: async ({ fullName, email, password }: RegisterPayload) => {
       const res = await axios.post(
-        `http://localhost:5000/api/users/signup`,
+        `${base_url}/api/users/signup`,
         {
           name: fullName,
           email,
