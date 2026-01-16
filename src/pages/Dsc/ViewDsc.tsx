@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
-import { Button } from "@/components/ui/button";
-import TakenCreate from "../Taken/TakenCreate";
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 import UsersGroupIcon from "@/components/ui/users-group-icon";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import TakenCreate from "../Taken/TakenCreate";
+import UpdateReturn from "../UpdateReturn/UpdateReturn";
 
 type Post = {
   _id: string;
@@ -143,7 +143,8 @@ const ViewDsc = () => {
             dark:border-gray-700 ">
                       <div className="flex space-x-2">
                         <TakenCreate dscid={post._id} />
-                        <Button variant="outline"> Return</Button>
+                        <UpdateReturn dscid={post._id} />
+                     
                       </div>
 
                       <UsersGroupIcon />

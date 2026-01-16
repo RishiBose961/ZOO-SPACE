@@ -35,8 +35,6 @@ const RegisterDsc = () => {
   const [date, setDate] = useState<Date | undefined>(undefined)
   const { base_url } = CheckEnvironment();
 
-  console.log(base_url);
-  
   const [formData, setFormData] = useState({
     companyname: "",
     name: "",
