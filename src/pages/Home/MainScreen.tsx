@@ -28,6 +28,12 @@ const cardData = [
     link: "/projects",
     madeNot:false
   },
+  {
+    id: 4,
+    name: "Auth View & Manage",
+    link: "/projects",
+    madeNot:false
+  },
 ]
 
 const MainScreen = () => {

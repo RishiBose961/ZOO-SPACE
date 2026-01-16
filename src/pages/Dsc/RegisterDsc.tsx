@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChevronDownIcon } from "lucide-react"
 import React, { useState } from "react"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useSelector } from "react-redux"
 
 import { Button } from "@/components/ui/button"
@@ -34,7 +34,7 @@ const RegisterDsc = () => {
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(undefined)
   const { base_url } = CheckEnvironment();
-
+const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     companyname: "",
     name: "",
@@ -70,6 +70,7 @@ const RegisterDsc = () => {
     },
     onSuccess: () => {
       alert("DSC Registered Successfully ✅")
+       queryClient.invalidateQueries({ queryKey: ["posts"] });
       setFormData({
         companyname: "",
         name: "",

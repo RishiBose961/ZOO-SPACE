@@ -1,8 +1,10 @@
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { format, differenceInCalendarDays } from "date-fns";
+import { differenceInCalendarDays, format } from "date-fns";
+import { useState } from "react";
 
+import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
+import Example from "@/components/spinner-inline-4";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -20,7 +22,6 @@ import {
 } from "@/components/ui/table";
 import { CalendarIcon } from "lucide-react";
 import { useSelector } from "react-redux";
-import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 
 type Taken = {
   _id: string;
@@ -125,50 +126,52 @@ export default function SideBar() {
 
       </div>
 
-      {isLoading && (
-        <div className="text-muted-foreground">
-          Loading expiring data...
-        </div>
-      )}
 
       {isError && (
         <div className="text-red-500">
           Failed to load data
         </div>
       )}
-
-      <div className="border rounded-lg overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Company</TableHead>
-              <TableHead>Group</TableHead>
-              <TableHead>Expiry Date</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {data?.data?.map((item: Taken) => (
-              <TableRow key={item._id}>
-                <TableCell>{item.companyname.slice(0, 15)}..</TableCell>
-                <TableCell>{item.group}</TableCell>
-                <TableCell>{item.expirydate}</TableCell>
-              </TableRow>
-            ))}
-
-            {data?.data?.length === 0 && (
+      {isLoading ? (
+        <div className="text-muted-foreground">
+          <Example />
+        </div>
+      ) : <>
+        <div className="border rounded-lg overflow-x-auto">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell
-                  colSpan={4}
-                  className="text-center text-muted-foreground"
-                >
-                  No records expiring in {days} days
-                </TableCell>
+                <TableHead>Company</TableHead>
+                <TableHead>Group</TableHead>
+                <TableHead>Expiry Date</TableHead>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+            </TableHeader>
+
+            <TableBody>
+              {data?.data?.map((item: Taken) => (
+                <TableRow key={item._id}>
+                  <TableCell>{item.companyname.slice(0, 15)}..</TableCell>
+                  <TableCell>{item.group}</TableCell>
+                  <TableCell>{item.expirydate}</TableCell>
+                </TableRow>
+              ))}
+
+              {data?.data?.length === 0 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={4}
+                    className="text-center text-muted-foreground"
+                  >
+                    No records expiring in {days} days
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </>}
+
+
     </div>
   );
 }

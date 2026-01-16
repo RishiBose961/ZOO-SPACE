@@ -1,6 +1,7 @@
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
-import UsersGroupIcon from "@/components/ui/users-group-icon";
+import Example from "@/components/spinner-inline-4";
 import { useQuery } from "@tanstack/react-query";
+import { Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TakenCreate from "../Taken/TakenCreate";
@@ -29,10 +30,13 @@ const ViewDsc = () => {
   const { user } = useSelector(
     (state: {
       auth: {
-        user: { token: string }
+        user: {
+          roles: string; token: string
+        }
       }
     }) => state.auth
   )
+
 
   const limit = 12;
 
@@ -85,7 +89,7 @@ const ViewDsc = () => {
 
 
 
-      {isLoading && <p className="mt-2">Loading...</p>}
+      {isLoading && <div className="flex justify-center mt-4"><Example /></div>}
       {isFetching && !isLoading && <p className="mt-2">Updating...</p>}
 
       <div className="mt-4">
@@ -117,6 +121,10 @@ const ViewDsc = () => {
               dark:text-gray-100">
                         {post.companyname}
                       </h3>
+                      {
+                        user?.roles === "admin" && <Trash2 />
+                      }
+
 
                     </div>
                     <p className="text-sm font-medium
@@ -144,10 +152,9 @@ const ViewDsc = () => {
                       <div className="flex space-x-2">
                         <TakenCreate dscid={post._id} />
                         <UpdateReturn dscid={post._id} />
-                     
+
                       </div>
 
-                      <UsersGroupIcon />
                     </div>
                   </div>
                 ))}
@@ -157,26 +164,29 @@ const ViewDsc = () => {
         )}
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-between mt-4">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage((p) => p - 1)}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Prev
-        </button>
+      {isLoading ? null : <>
+        {/* Pagination */}
+        <div className="flex justify-between mt-4">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage((p) => p - 1)}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Prev
+          </button>
 
-        <span>Page {page}</span>
+          <span>Page {page}</span>
 
-        <button
-          disabled={(data?.count ?? 0) < limit}
-          onClick={() => setPage((p) => p + 1)}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+          <button
+            disabled={(data?.count ?? 0) < limit}
+            onClick={() => setPage((p) => p + 1)}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      </>}
+
     </div>
   );
 };

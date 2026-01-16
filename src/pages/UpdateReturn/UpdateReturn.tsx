@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+
 import {
     Sheet,
     SheetContent,
@@ -7,19 +8,27 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-const UpdateReturn = ({ dscid }:{dscid:string}) => {
+
+
+import Return from "./Return"
+import UpdateDsc from "./UpdateDsc"
+const UpdateReturn = ({ dscid }: { dscid: string }) => {
 
     return (
         <Sheet>
-            <SheetTrigger>
+            <SheetTrigger asChild>
                 <Button variant="outline">Return | Update</Button></SheetTrigger>
             <SheetContent>
                 <SheetHeader>
-                    <SheetTitle>Are you absolutely sure?</SheetTitle>
+                    <SheetTitle>Return | Update</SheetTitle>
                     <SheetDescription>
-                        <p>{dscid}</p>
+                        Return | Update {dscid}
                     </SheetDescription>
                 </SheetHeader>
+                <div className="px-4 space-y-3">
+                   <Return/>
+                   <UpdateDsc/>
+                </div>
             </SheetContent>
         </Sheet>
     )
