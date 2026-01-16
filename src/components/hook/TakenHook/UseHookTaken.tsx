@@ -1,3 +1,4 @@
+import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 
@@ -10,6 +11,10 @@ const UseHookTaken = (value:string) => {
       };
     }) => state.auth
   );
+
+  const { base_url } = CheckEnvironment(); 
+
+
   const {
     isPending,
     error,
@@ -19,7 +24,7 @@ const UseHookTaken = (value:string) => {
     queryKey: ["getTakenDatas",value],
     queryFn: async () => {
       return await fetch(
-        `http://localhost:5000/api/taken/${value}`,
+        `${base_url}/api/taken/${value}`,
         {
           method: "GET",
           headers: {
