@@ -20,7 +20,6 @@ export default function LoginForm() {
 
   const { base_url } = CheckEnvironment();
   const navigate = useNavigate();
-  // const { base_url } = CheckEnvironment();
 
   const dispatch = useDispatch<AppDispatch>();
 
