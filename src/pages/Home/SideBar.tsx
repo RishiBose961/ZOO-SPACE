@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { format, differenceInCalendarDays } from "date-fns";
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import { CalendarIcon } from "lucide-react";
 import { useSelector } from "react-redux";
+import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 
 type Taken = {
   _id: string;
@@ -29,10 +30,12 @@ type Taken = {
   expirydate: string;
 };
 
+const { base_url } = CheckEnvironment();
+
 
 const fetchExpiring = async (days: number, token: string) => {
   const res = await fetch(
-    `http://localhost:5000/api/dsc/expired?days=${days}`,
+    `${base_url}/api/dsc/expired?days=${days}`,
     {
       headers: {
         "Content-Type": "application/json",
