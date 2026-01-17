@@ -134,7 +134,7 @@ export default function SideBar() {
       )}
       {isLoading ? (
         <div className="text-muted-foreground">
-          <Example />
+          <Example  data="Expiring DSC Records"/>
         </div>
       ) : <>
         <div className="border rounded-lg overflow-x-auto">
