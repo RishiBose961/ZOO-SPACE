@@ -2,8 +2,8 @@ import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 
-const UseHookTaken = (value:string) => {
- const { user, isAuthenticated } = useSelector(
+const UseHookTaken = (value: string) => {
+  const { user, isAuthenticated } = useSelector(
     (state: {
       auth: {
         isAuthenticated: boolean;
@@ -12,7 +12,7 @@ const UseHookTaken = (value:string) => {
     }) => state.auth
   );
 
-  const { base_url } = CheckEnvironment(); 
+  const { base_url } = CheckEnvironment();
 
 
   const {
@@ -21,7 +21,7 @@ const UseHookTaken = (value:string) => {
     isError,
     data: getTakenData,
   } = useQuery({
-    queryKey: ["getTakenDatas",value],
+    queryKey: ["getTakenDatas", value],
     queryFn: async () => {
       return await fetch(
         `${base_url}/api/taken/${value}`,
@@ -35,7 +35,7 @@ const UseHookTaken = (value:string) => {
       ).then((res) => res.json());
     },
     enabled: isAuthenticated,
-
+    staleTime: 10000
   });
 
   if (isError) {

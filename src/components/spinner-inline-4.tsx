@@ -8,11 +8,11 @@ import { Spinner } from "@/components/ui/spinner";
 
 export const title = "Spinner in List Item";
 
-const Example = () => (
+const Example = ({data}: {data: string}) => (
   <Item>
     <Spinner className="text-muted-foreground" />
     <ItemContent>
-      <ItemTitle>Loading user profile</ItemTitle>
+      <ItemTitle>Loading {data}</ItemTitle>
       <ItemDescription>Please wait while we fetch your data</ItemDescription>
     </ItemContent>
   </Item>

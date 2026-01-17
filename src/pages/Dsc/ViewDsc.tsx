@@ -89,7 +89,7 @@ const ViewDsc = () => {
 
 
 
-      {isLoading && <div className="flex justify-center mt-4"><Example /></div>}
+      {isLoading && <div className="flex justify-center mt-4"><Example data="View DSC"/></div>}
       {isFetching && !isLoading && <p className="mt-2">Updating...</p>}
 
       <div className="mt-4">
