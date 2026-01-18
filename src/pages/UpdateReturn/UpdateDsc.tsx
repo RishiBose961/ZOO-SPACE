@@ -15,14 +15,63 @@ import {
 } from "@/components/ui/select"
 import { ChevronDownIcon } from "lucide-react"
 import { useState } from "react"
-const UpdateDsc = () => {
+import axios from "axios"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useSelector } from "react-redux"
+import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment"
+
+const UpdateDsc = ({ dscid }: { dscid: string }) => {
+    const queryClient = useQueryClient()
+
+    const { user } = useSelector(
+        (state: {
+            auth: {
+                isAuthenticated: boolean;
+                user: { token: string; _id: string };
+            };
+        }) => state.auth
+    );
+
+    const { base_url } = CheckEnvironment();
+
     const [open, setOpen] = useState(false)
     const [date, setDate] = useState<Date | undefined>(undefined)
+    const [group, setGroup] = useState<string>("")
+
+    const updateMutation = useMutation({
+        mutationFn: async () => {
+            const res = await axios.patch(
+                `${base_url}/api/dsc/update/${dscid}`,
+                {
+                    group,
+                    expirydate: date
+                        ? date.toLocaleDateString("en-IN").replaceAll("/", "-")
+                        : null,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${user?.token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            return res.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["posts"] })
+        },
+    })
+
+    const handleUpdate = () => {
+        updateMutation.mutate()
+    }
 
     return (
-        <div className="space-y-3 bg-card p-2 rounded-2xl">
+        <div className="space-y-3 bg-card p-3 rounded-2xl">
             <div className="space-y-3">
-                <p className=" font-bold mt-4">Update</p>
+                <p className="font-bold mt-4">Update</p>
+
+                {/* Expiry Date */}
                 <Label>Expiry Date</Label>
                 <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
@@ -54,8 +103,7 @@ const UpdateDsc = () => {
             {/* Group */}
             <div className="space-y-1">
                 <Label>Group</Label>
-                <Select
-                >
+                <Select value={group} onValueChange={setGroup}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select group" />
                     </SelectTrigger>
@@ -67,7 +115,14 @@ const UpdateDsc = () => {
                     </SelectContent>
                 </Select>
             </div>
-            <Button className="rounded-full">Update</Button>
+
+            <Button
+                className="rounded-full w-full"
+                onClick={handleUpdate}
+                disabled={updateMutation.isPending}
+            >
+                {updateMutation.isPending ? "Updating..." : "Update"}
+            </Button>
         </div>
     )
 }

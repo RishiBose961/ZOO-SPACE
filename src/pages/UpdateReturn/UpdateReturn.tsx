@@ -26,8 +26,8 @@ const UpdateReturn = ({ dscid }: { dscid: string }) => {
                     </SheetDescription>
                 </SheetHeader>
                 <div className="px-4 space-y-3">
-                   <Return/>
-                   <UpdateDsc/>
+                   <Return dscid={dscid}/>
+                   <UpdateDsc dscid={dscid}/>
                 </div>
             </SheetContent>
         </Sheet>

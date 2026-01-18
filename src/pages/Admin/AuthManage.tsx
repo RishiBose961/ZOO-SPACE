@@ -12,7 +12,6 @@ import type { JSX } from "react/jsx-runtime";
 import UpdateAuth from "./UpdateAuth";
 
 
-  export const title = "Basic Table";
 const AuthManage = () => {
   const { isPending, getAdminData } = UseAdminHook() as {
     isPending: boolean;
@@ -51,7 +50,7 @@ const AuthManage = () => {
                 <TableCell>{user.roles}</TableCell>
                 <TableCell>{user.blocked ? "Blocked" : "Active"}</TableCell>
                 <TableCell>
-                  <UpdateAuth/>
+                  <UpdateAuth users={user}/>
                 </TableCell>
               </TableRow>
             ))}

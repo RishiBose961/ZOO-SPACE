@@ -87,7 +87,7 @@ const TakenCreate = ({ dscid }: TakenCreateProps) => {
             return res.data
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["taken"] })
+            queryClient.invalidateQueries({ queryKey: ["getTakenDatas"] })
             setForm({ name: "", contact: "" })
             setOpen(false)
         },
