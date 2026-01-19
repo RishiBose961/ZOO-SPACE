@@ -35,7 +35,7 @@ type ApiResponse<T> = {
 }
 
 type TakenCreateProps = {
-    dscid: string
+    dscid: string | undefined
 }
 
 
@@ -104,19 +104,33 @@ const TakenCreate = ({ dscid }: TakenCreateProps) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
+        if (!dscid) {
+            // dscid must be present to create a Taken record
+            return
+        }
+
         mutation.mutate({
             ...form,
             dscid,
         })
     }
     const hasTaken = Array.isArray(getTakenData) && getTakenData.length > 0
+
+    console.log(hasTaken);
+    
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" className="cursor-pointer">
+                {
+                    !hasTaken ?<Button variant="outline" className="cursor-pointer">
+                    <HandHelping className="mr-2 h-4 w-4" />
+                    Take
+                </Button>: <Button variant="default" className="cursor-pointer">
                     <HandHelping className="mr-2 h-4 w-4" />
                     Taken
                 </Button>
+                }
+               
             </DialogTrigger>
 
 

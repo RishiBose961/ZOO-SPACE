@@ -2,7 +2,7 @@ import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 
-const UseHookTaken = (value: string | undefined) => {
+const UseGetIdDsc = (value: string | undefined) => {
   const { user, isAuthenticated } = useSelector(
     (state: {
       auth: {
@@ -19,12 +19,14 @@ const UseHookTaken = (value: string | undefined) => {
     isPending,
     error,
     isError,
-    data: getTakenData,
+    refetch,
+    isFetching,
+    data: getIdDsc,
   } = useQuery({
-    queryKey: ["getTakenDatas", value],
+    queryKey: ["getIdDscs", value],
     queryFn: async () => {
       return await fetch(
-        `${base_url}/api/taken/${value}`,
+        `${base_url}/api/dsc/${value}`,
         {
           method: "GET",
           headers: {
@@ -35,14 +37,14 @@ const UseHookTaken = (value: string | undefined) => {
       ).then((res) => res.json());
     },
     enabled: isAuthenticated,
-    staleTime: 10000
+    staleTime: 10000,
   });
 
   if (isError) {
     return <span>Error: {error.message}</span>;
   }
 
-  return { isPending, getTakenData };
+  return { isPending, getIdDsc, refetch, isFetching };
 }
 
-export default UseHookTaken
+export default UseGetIdDsc

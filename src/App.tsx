@@ -7,6 +7,7 @@ import AuthPage from "./pages/Autrh/Auth"
 import PrivateRoute from "./components/PrivateRoute"
 import useAuthEffect from "./components/useAuthEffect"
 import AuthManage from "./pages/Admin/AuthManage"
+import GetDscById from "./pages/Dsc/GetDscById"
 const App = () => {
   const isauth = false
   useAuthEffect();
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/dsc-register" element={<RegisterDsc />} />
           <Route path="/dsc-manage" element={<ViewDsc />} />
           <Route path="/auth-manage" element={<AuthManage />} />
+          <Route path="/dsc/:id" element={<GetDscById />} />
         </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />

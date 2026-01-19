@@ -1,11 +1,10 @@
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 import Example from "@/components/spinner-inline-4";
 import { useQuery } from "@tanstack/react-query";
-import { Trash2 } from "lucide-react";
+import { Eye, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import TakenCreate from "../Taken/TakenCreate";
-import UpdateReturn from "../UpdateReturn/UpdateReturn";
+import { Link } from "react-router";
 
 type Post = {
   _id: string;
@@ -89,7 +88,7 @@ const ViewDsc = () => {
 
 
 
-      {isLoading && <div className="flex justify-center mt-4"><Example data="View DSC"/></div>}
+      {isLoading && <div className="flex justify-center mt-4"><Example data="View DSC" /></div>}
       {isFetching && !isLoading && <p className="mt-2">Updating...</p>}
 
       <div className="mt-4">
@@ -150,8 +149,8 @@ const ViewDsc = () => {
             border-gray-100 
             dark:border-gray-700 ">
                       <div className="flex space-x-2">
-                        <TakenCreate dscid={post._id} />
-                        <UpdateReturn dscid={post._id} />
+                        <Link to={`/dsc/${post._id}`} className="flex space-x-2 items-center p-2 rounded-full hover:bg-amber-200/60"><Eye /> <span>View</span></Link>
+                      
 
                       </div>
 

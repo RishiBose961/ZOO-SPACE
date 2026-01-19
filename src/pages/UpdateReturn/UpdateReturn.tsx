@@ -12,7 +12,7 @@ import {
 
 import Return from "./Return"
 import UpdateDsc from "./UpdateDsc"
-const UpdateReturn = ({ dscid }: { dscid: string }) => {
+const UpdateReturn = ({ dscid }: { dscid: string | undefined }) => {
 
     return (
         <Sheet>

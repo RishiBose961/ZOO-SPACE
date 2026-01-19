@@ -20,7 +20,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useSelector } from "react-redux"
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment"
 
-const UpdateDsc = ({ dscid }: { dscid: string }) => {
+const UpdateDsc = ({ dscid }: { dscid: string | undefined }) => {
     const queryClient = useQueryClient()
 
     const { user } = useSelector(
@@ -69,7 +69,8 @@ const UpdateDsc = ({ dscid }: { dscid: string }) => {
     return (
         <div className="space-y-3 bg-card p-3 rounded-2xl">
             <div className="space-y-3">
-                <p className="font-bold mt-4">Update</p>
+                <p className="font-bold mt-2">Update DSC</p>
+                <hr/>
 
                 {/* Expiry Date */}
                 <Label>Expiry Date</Label>
