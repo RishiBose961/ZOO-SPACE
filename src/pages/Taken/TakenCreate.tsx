@@ -116,7 +116,6 @@ const TakenCreate = ({ dscid }: TakenCreateProps) => {
     }
     const hasTaken = Array.isArray(getTakenData) && getTakenData.length > 0
 
-    console.log(hasTaken);
     
     return (
         <Dialog open={open} onOpenChange={setOpen}>

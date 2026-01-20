@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { AppDispatch } from "../store";
 
@@ -77,7 +78,7 @@ export const loadUser = () => async (dispatch: AppDispatch) => {
       dispatch(setLoadingAction(false)); // No user found, stop loading
     }
   } catch (error) {
-    console.error("Error loading user:", error);
+    // console.error("Error loading user:", error);
     dispatch(setLoadingAction(false));
   }
 };

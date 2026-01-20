@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { endSession, startSession } from "@/auth/session";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { logoutUserAction } from "@/slice/authSlice";
 import { Eye, LogOut } from "lucide-react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
 
@@ -32,9 +35,23 @@ const MainScreen = () => {
 
 
   const handleLogout = () => {
+    endSession()
     dispatch(logoutUserAction());
+    window.location.replace("/auth");
   };
 
+  const onLoginSuccess = (token: string) => {
+  startSession(token, () => {
+    dispatch(logoutUserAction())
+    window.location.replace("/auth")
+  })
+}
+
+  useEffect(() => {
+    if (isAuthenticated && user?.token) {
+      onLoginSuccess(user.token)
+    }
+  }, [user?.token]);
 
   const cardData: CardItem[] = [
     {
