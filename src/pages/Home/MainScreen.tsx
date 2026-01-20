@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { endSession, startSession } from "@/auth/session";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -96,7 +97,8 @@ const MainScreen = () => {
 
   return (
     <div className="space-y-4 p-4">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <Badge variant="secondary">v1</Badge>
         <Button onClick={handleLogout} variant="ghost" className="mr-2 rounded-3xl cursor-pointer"><LogOut /> Logout</Button>
         
       </div>
