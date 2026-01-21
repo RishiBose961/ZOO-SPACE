@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import { CalendarIcon } from "lucide-react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router";
 
 type Taken = {
   _id: string;
@@ -150,7 +151,7 @@ export default function SideBar() {
             <TableBody>
               {data?.data?.map((item: Taken) => (
                 <TableRow key={item._id}>
-                  <TableCell>{item.companyname.slice(0, 15)}..</TableCell>
+                  <TableCell><Link to={`/dsc/${item._id}`}>{item.companyname.slice(0, 15)}.. </Link></TableCell>
                   <TableCell>{item.group}</TableCell>
                   <TableCell>{item.expirydate}</TableCell>
                 </TableRow>
