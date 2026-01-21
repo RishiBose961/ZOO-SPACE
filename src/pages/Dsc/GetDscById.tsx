@@ -1,19 +1,61 @@
 import type { FC, ReactNode } from "react";
 import UseGetIdDsc from "@/components/hook/DscHook/UseGetIdDsc";
-import { Building2, Calendar, User, Users } from "lucide-react"; // Optional icons for polish
+import { Building2, Calendar, Trash2, User, Users } from "lucide-react"; // Optional icons for polish
 import type { LucideIcon } from "lucide-react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import TakenCreate from "../Taken/TakenCreate";
 import UpdateReturn from "../UpdateReturn/UpdateReturn";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useSelector } from "react-redux";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 /**
  * Component to get a DSC by its id and display details with action forms.
  * Supports Dark/Light mode and responsive design.
  */
 const GetDscById = () => {
+    const queryClient = useQueryClient()
+    const navigate = useNavigate();
     const { id } = useParams();
+    const { user } = useSelector(
+        (state: {
+            auth: {
+                user: {
+                    roles: string; token: string
+                }
+            }
+        }) => state.auth
+    )
+    const deleteDSC = async () => {
+        const res = await axios.delete(
+            `http://localhost:5000/api/dsc/delete/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${user?.token}`,
+                },
+            }
+        )
+        return res.data
+    }
+
+    const { mutate, isPending: isDeletePending } = useMutation({
+        mutationFn: deleteDSC,
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["posts"] })
+            navigate("/dsc-manage")
+
+        },
+
+        onError: (err) => {
+            console.error("Delete failed:", err)
+            alert("Failed to delete DSC")
+        },
+    })
+
+
     const { isPending, getIdDsc, refetch, isFetching } = UseGetIdDsc(id) as {
         isPending: boolean;
         getIdDsc: {
@@ -35,6 +77,14 @@ const GetDscById = () => {
         label: string;
         value?: ReactNode;
     };
+
+    if (isDeletePending) {
+        return (
+            <div className="flex items-center justify-center p-4">
+                <Spinner /> Deleting DSC...
+            </div>
+        );
+    }
 
     const DetailItem: FC<DetailItemProps> = ({ icon: Icon, label, value }) => (
         <div className="flex flex-col space-y-1 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700">
@@ -67,13 +117,26 @@ const GetDscById = () => {
                     onClick={() => refetch()}
                     disabled={isFetching}
                 >
-                    {isFetching ? <div className=" flex items-center gap-2"><Spinner/> Loading </div>: "Reload"}
+                    {isFetching ? <div className=" flex items-center gap-2"><Spinner /> Loading </div> : "Reload"}
                 </Button>
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                    <div className="border-b border-gray-200 dark:border-gray-700 p-5 bg-gray-50/50 dark:bg-gray-800/50">
+                    <div className="border-b flex items-center justify-between border-gray-200 dark:border-gray-700 p-5 bg-gray-50/50 dark:bg-gray-800/50">
                         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                             Certificate Details
                         </h2>
+                        {
+                            user?.roles === "admin" && <button
+                                disabled={isPending}
+                                onClick={() => {
+                                    if (confirm("Are you sure you want to delete this DSC?")) {
+                                        mutate()
+                                    }
+                                }}
+                                className="text-red-500 cursor-pointer hover:text-red-700 disabled:opacity-50"
+                            >
+                                <Trash2 size={18} />
+                            </button>
+                        }
                     </div>
 
                     <div className="p-6">
@@ -128,6 +191,7 @@ const GetDscById = () => {
                             </h3>
                             <UpdateReturn dscid={id} />
                         </div>
+
                     </div>
                 )}
             </div>

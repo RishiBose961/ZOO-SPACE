@@ -9,6 +9,7 @@ import RegisterDsc from "./pages/Dsc/RegisterDsc"
 import ViewDsc from "./pages/Dsc/ViewDsc"
 import Home from "./pages/Home/Home"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
+import { Button } from "./components/ui/button"
 const App = () => {
   const isauth = false
   useAuthEffect();
@@ -24,7 +25,7 @@ const App = () => {
        {isUpdateAvailable && (
         <div className="update-popup">
           <p>A new version is available. Update now?</p>
-          <button onClick={updateServiceWorker}>Update</button>
+          <Button onClick={updateServiceWorker}>Update</Button>
         </div>
       )}
 

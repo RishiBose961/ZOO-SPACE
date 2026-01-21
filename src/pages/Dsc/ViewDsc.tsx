@@ -1,7 +1,7 @@
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 import Example from "@/components/spinner-inline-4";
-import { useQuery } from "@tanstack/react-query";
-import { Eye, Trash2 } from "lucide-react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
@@ -69,7 +69,7 @@ const ViewDsc = () => {
   const { data, isLoading, isFetching } = useQuery<SearchResponse>({
     queryKey: ["posts", debouncedSearch, page],
     queryFn: fetchPosts,
-    placeholderData: undefined,
+    placeholderData: keepPreviousData,
     staleTime: 60 * 1000,
   });
 
@@ -120,9 +120,7 @@ const ViewDsc = () => {
               dark:text-gray-100">
                         {post.companyname}
                       </h3>
-                      {
-                        user?.roles === "admin" && <Trash2 />
-                      }
+                    
 
 
                     </div>
