@@ -98,7 +98,7 @@ const MainScreen = () => {
   return (
     <div className="space-y-4 p-4">
       <div className="flex justify-between items-center">
-        <Badge variant="secondary">v2</Badge>
+        <Badge variant="secondary">v3</Badge>
         <Button onClick={handleLogout} variant="ghost" className="mr-2 rounded-3xl cursor-pointer"><LogOut /> Logout</Button>
         
       </div>

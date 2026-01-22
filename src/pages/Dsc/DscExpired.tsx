@@ -22,6 +22,7 @@ const DscExpired = () => {
             <TableCaption>A list of your recent dsc expired.</TableCaption>
             <TableHeader>
                 <TableRow>
+                    <TableHead>Sno</TableHead>
                     <TableHead>Company Name</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead>Expiry Date</TableHead>
@@ -38,6 +39,7 @@ const DscExpired = () => {
                         </TableCell>
                     ) : getExpired?.data?.map((dsc:{ companyname: string; name: string; expirydate: string; group: string; _id: string; }, index : number) => (
                         <TableRow>
+                            <TableCell className="font-medium">{index + 1}</TableCell>
                             <TableCell key={index} className="font-medium">
                                 {dsc.companyname}
                             </TableCell>

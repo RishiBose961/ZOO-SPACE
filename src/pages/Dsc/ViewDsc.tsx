@@ -73,10 +73,15 @@ const ViewDsc = () => {
     staleTime: 60 * 1000,
   });
 
-  const date = new Date();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const dateString = date.toLocaleDateString("en-IN").replaceAll("/", "-")
-
+  const normalizeDate = (dateStr: string) => {
+  const [dd, mm, yyyy] = dateStr.split("-");
+  const d = new Date(`${yyyy}-${mm}-${dd}`);
+  d.setHours(0, 0, 0, 0);
+  return d;
+};
 
   return (
     <div className=" mx-auto p-4">
@@ -124,7 +129,7 @@ const ViewDsc = () => {
               dark:text-gray-100">
                         {post.companyname}
                       </h3>
-                    
+
 
 
                     </div>
@@ -137,14 +142,12 @@ const ViewDsc = () => {
                       <div className="flex justify-between">
                         <div>
                           <span className="font-semibold mr-1">Expires:</span>
-                          {
-                            post.expirydate <= dateString ? (
-                              <span className="font-mono text-red-600 font-bold">Expired</span>
-                            ) : (
-                              <span className="font-mono">{post.expirydate}</span>
-                            )
-                          }
-                        
+                          {normalizeDate(post?.expirydate) <= today ? (
+                            <span className="font-mono text-red-600 font-bold">Expired</span>
+                          ) : (
+                            <span className="font-mono">{post.expirydate}</span>
+                          )}
+
                         </div>
 
                         <div>
@@ -159,7 +162,7 @@ const ViewDsc = () => {
             dark:border-gray-700 ">
                       <div className="flex space-x-2">
                         <Link to={`/dsc/${post._id}`} className="flex space-x-2 items-center p-2 rounded-full hover:bg-amber-200/60"><Eye /> <span>View</span></Link>
-                      
+
 
                       </div>
 
