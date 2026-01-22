@@ -187,7 +187,7 @@ const queryClient = useQueryClient();
                   <SelectItem value="A">Group A</SelectItem>
                   <SelectItem value="B">Group B</SelectItem>
                   <SelectItem value="C">Group C</SelectItem>
-                  <SelectItem value="D">Group D</SelectItem>
+                  <SelectItem value="Expired">Expired</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -69,9 +69,9 @@ const MainScreen = () => {
     },
     {
       id: 3,
-      name: "File Finder",
-      link: "/projects",
-      madeNot: false,
+      name: "DSC Expiry",
+      link: "/dsc-expiry",
+      madeNot: true,
     },
     {
       id: 4,

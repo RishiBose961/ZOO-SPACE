@@ -1,15 +1,15 @@
-import type { FC, ReactNode } from "react";
 import UseGetIdDsc from "@/components/hook/DscHook/UseGetIdDsc";
-import { Building2, Calendar, Trash2, User, Users } from "lucide-react"; // Optional icons for polish
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import type { LucideIcon } from "lucide-react";
+import { Box, Building2, Calendar, Trash2, User } from "lucide-react"; // Optional icons for polish
+import type { FC, ReactNode } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import TakenCreate from "../Taken/TakenCreate";
 import UpdateReturn from "../UpdateReturn/UpdateReturn";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import { useSelector } from "react-redux";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 
 /**
  * Component to get a DSC by its id and display details with action forms.
@@ -164,8 +164,8 @@ const GetDscById = () => {
                                     value={getIdDsc?.dsc?.expirydate}
                                 />
                                 <DetailItem
-                                    icon={Users}
-                                    label="Group"
+                                    icon={Box}
+                                    label="Box"
                                     value={getIdDsc?.dsc?.group}
                                 />
                             </div>

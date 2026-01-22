@@ -10,6 +10,7 @@ import ViewDsc from "./pages/Dsc/ViewDsc"
 import Home from "./pages/Home/Home"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
 import { Button } from "./components/ui/button"
+import DscExpired from "./pages/Dsc/DscExpired"
 const App = () => {
   const isauth = false
   useAuthEffect();
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/dsc-manage" element={<ViewDsc />} />
           <Route path="/auth-manage" element={<AuthManage />} />
           <Route path="/dsc/:id" element={<GetDscById />} />
+          <Route path="/dsc-expiry" element={<DscExpired />} />
         </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />

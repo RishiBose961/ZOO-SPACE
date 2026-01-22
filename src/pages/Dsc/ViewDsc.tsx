@@ -73,6 +73,10 @@ const ViewDsc = () => {
     staleTime: 60 * 1000,
   });
 
+  const date = new Date();
+
+  const dateString = date.toLocaleDateString("en-IN").replaceAll("/", "-")
+
 
   return (
     <div className=" mx-auto p-4">
@@ -133,7 +137,14 @@ const ViewDsc = () => {
                       <div className="flex justify-between">
                         <div>
                           <span className="font-semibold mr-1">Expires:</span>
-                          <span className="font-mono">{post.expirydate}</span>
+                          {
+                            post.expirydate <= dateString ? (
+                              <span className="font-mono text-red-600 font-bold">Expired</span>
+                            ) : (
+                              <span className="font-mono">{post.expirydate}</span>
+                            )
+                          }
+                        
                         </div>
 
                         <div>
