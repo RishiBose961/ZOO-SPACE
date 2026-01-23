@@ -67,6 +67,7 @@ export default function LoginForm() {
       }
 
       dispatch(loginUserAction(data))
+      
       navigate("/")
     },
 

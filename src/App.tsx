@@ -11,19 +11,25 @@ import Home from "./pages/Home/Home"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
 import { Button } from "./components/ui/button"
 import DscExpired from "./pages/Dsc/DscExpired"
+import { useEffect } from "react"
 const App = () => {
-  const isauth = false
+
   useAuthEffect();
 
- const { isUpdateAvailable, updateServiceWorker } = useServiceWorkerUpdater();
+  const { isUpdateAvailable, updateServiceWorker } = useServiceWorkerUpdater();
+
+    useEffect(() => {
+    if ("Notification" in window) {
+      Notification.requestPermission();
+    }
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto px-2">
-      {
-        isauth ? null : <Navbar />
-      }
+      <Navbar />
 
-       {isUpdateAvailable && (
+
+      {isUpdateAvailable && (
         <div className="update-popup">
           <p>A new version is available. Update now?</p>
           <Button onClick={updateServiceWorker}>Update</Button>

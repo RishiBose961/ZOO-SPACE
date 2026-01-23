@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import TakenCreate from "../Taken/TakenCreate";
 import UpdateReturn from "../UpdateReturn/UpdateReturn";
+import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 
 /**
  * Component to get a DSC by its id and display details with action forms.
@@ -17,6 +18,7 @@ import UpdateReturn from "../UpdateReturn/UpdateReturn";
  */
 const GetDscById = () => {
     const queryClient = useQueryClient()
+     const { base_url } = CheckEnvironment();
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useSelector(
@@ -30,7 +32,7 @@ const GetDscById = () => {
     )
     const deleteDSC = async () => {
         const res = await axios.delete(
-            `http://localhost:5000/api/dsc/delete/${id}`,
+            `${base_url}/api/dsc/delete/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${user?.token}`,

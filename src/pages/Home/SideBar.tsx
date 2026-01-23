@@ -23,6 +23,7 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
+import ExpiryNotifier from "../Dsc/ExpiryNotifier";
 
 type Taken = {
   _id: string;
@@ -154,6 +155,7 @@ export default function SideBar() {
                   <TableCell><Link to={`/dsc/${item._id}`}>{item.companyname.slice(0, 15)}.. </Link></TableCell>
                   <TableCell>{item.group}</TableCell>
                   <TableCell>{item.expirydate}</TableCell>
+                  <ExpiryNotifier expirydate={item.expirydate} />
                 </TableRow>
               ))}
 

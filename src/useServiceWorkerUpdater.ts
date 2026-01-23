@@ -10,7 +10,7 @@ export const useServiceWorkerUpdater = () => {
     let refreshing = false;
 
     navigator.serviceWorker
-      .register("/dist/sw.js")
+      .register("/sw.js")
       .then((registration: ServiceWorkerRegistration) => {
         // If there's already a waiting worker
         if (registration.waiting) {

@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { endSession, startSession } from "@/auth/session";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { logoutUserAction } from "@/slice/authSlice";
 import { Eye, LogOut } from "lucide-react";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
 
@@ -32,27 +30,16 @@ const MainScreen = () => {
     }) => state.auth
   );
 
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
   const handleLogout = () => {
-    endSession()
+
     dispatch(logoutUserAction());
     window.location.replace("/auth");
   };
 
-  const onLoginSuccess = (token: string) => {
-  startSession(token, () => {
-    dispatch(logoutUserAction())
-    window.location.replace("/auth")
-  })
-}
 
-  useEffect(() => {
-    if (isAuthenticated && user?.token) {
-      onLoginSuccess(user.token)
-    }
-  }, [user?.token]);
 
   const cardData: CardItem[] = [
     {
@@ -100,7 +87,7 @@ const MainScreen = () => {
       <div className="flex justify-between items-center">
         <Badge variant="secondary">v3</Badge>
         <Button onClick={handleLogout} variant="ghost" className="mr-2 rounded-3xl cursor-pointer"><LogOut /> Logout</Button>
-        
+
       </div>
 
       {visibleCards.map((item) => (
