@@ -3,7 +3,7 @@ import Example from "@/components/spinner-inline-4";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
 

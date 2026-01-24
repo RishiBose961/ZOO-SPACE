@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import TakenCreate from "../Taken/TakenCreate";
 import UpdateReturn from "../UpdateReturn/UpdateReturn";
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 
 /**
  * Component to get a DSC by its id and display details with action forms.

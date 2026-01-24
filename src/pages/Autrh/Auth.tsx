@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import LoginForm from "./LoginForm"
 import RegisterForm from "./RegisterForm"
 import GhostIcon from "@/components/ui/ghost-icon"
-import { Helmet } from "react-helmet-async"
+import { Helmet } from "react-helmet"
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState("login")

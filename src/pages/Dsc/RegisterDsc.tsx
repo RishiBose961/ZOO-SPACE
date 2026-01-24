@@ -29,7 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment"
-import { Helmet } from "react-helmet-async"
+import { Helmet } from "react-helmet"
 
 const RegisterDsc = () => {
   const [open, setOpen] = useState(false)
