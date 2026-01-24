@@ -3,10 +3,9 @@ import Example from "@/components/spinner-inline-4";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 
 type Post = {
   _id: string;
@@ -79,69 +78,24 @@ const ViewDsc = () => {
   today.setHours(0, 0, 0, 0);
 
   const normalizeDate = (dateStr: string) => {
-  const [dd, mm, yyyy] = dateStr.split("-");
-  const d = new Date(`${yyyy}-${mm}-${dd}`);
-  d.setHours(0, 0, 0, 0);
-  return d;
-};
+    const [dd, mm, yyyy] = dateStr.split("-");
+    const d = new Date(`${yyyy}-${mm}-${dd}`);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  };
 
-const downloadPDF = () => {
-  if (!data?.results?.length) return;
 
-  const doc = new jsPDF();
-
-  // Website name (you can customize)
-  const websiteName = "My DSC Management Portal";
-
-  doc.setFontSize(16);
-  doc.text(websiteName, 14, 15);
-
-  doc.setFontSize(11);
-  doc.text("DSC List", 14, 22);
-
-  const tableColumn = [
-    "Company Name",
-    "Name",
-    "Group",
-    "Expiry Date",
-    "Status",
-  ];
-
-  const tableRows = data.results.map((post) => {
-    const isExpired = normalizeDate(post.expirydate) <= today;
-
-    return [
-      post.companyname,
-      post.name,
-      post.group,
-      post.expirydate,
-      isExpired ? "Expired" : "Active",
-    ];
-  });
-
-  autoTable(doc, {
-    head: [tableColumn],
-    body: tableRows,
-    startY: 28,
-    styles: {
-      fontSize: 9,
-      cellPadding: 3,
-    },
-    headStyles: {
-      fillColor: [41, 128, 185], // blue header
-      textColor: 255,
-    },
-    alternateRowStyles: {
-      fillColor: [245, 245, 245],
-    },
-  });
-
-  doc.save("DSC_List.pdf");
-};
 
 
   return (
-    <div className=" mx-auto p-4">
+    <>
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>ZOO SPACE | View DSC</title>
+      </Helmet>
+  <div className=" mx-auto p-4">
+      
+
       <div className="max-w-md mx-auto">
         <input
           type="search"
@@ -151,12 +105,7 @@ const downloadPDF = () => {
           className="w-full p-2 rounded-full border-3 ps-5 pe-5"
         />
       </div>
-<button
-  onClick={downloadPDF}
-  className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
->
-  Download PDF
-</button>
+
 
 
       {isLoading && <div className="flex justify-center mt-4"><Example data="View DSC" /></div>}
@@ -261,6 +210,8 @@ const downloadPDF = () => {
       </>}
 
     </div>
+    </>
+  
   );
 };
 

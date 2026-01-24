@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import TakenCreate from "../Taken/TakenCreate";
 import UpdateReturn from "../UpdateReturn/UpdateReturn";
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
+import { Helmet } from "react-helmet-async";
 
 /**
  * Component to get a DSC by its id and display details with action forms.
@@ -18,7 +19,7 @@ import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
  */
 const GetDscById = () => {
     const queryClient = useQueryClient()
-     const { base_url } = CheckEnvironment();
+    const { base_url } = CheckEnvironment();
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useSelector(
@@ -101,103 +102,110 @@ const GetDscById = () => {
     );
 
     return (
-        <div className="  p-3 transition-colors duration-300">
-            <div className="space-y-8">
+        <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title> {`ZOO SPACE | ${getIdDsc?.dsc?.companyname}`}</title>
+            </Helmet>
+            <div className="  p-3 transition-colors duration-300">
+                <div className="space-y-8">
 
-                {/* Header Section */}
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                        DSC Management
-                    </h1>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-                        View details and manage records for ID: {id}
-                    </p>
-                </div>
-                <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => refetch()}
-                    disabled={isFetching}
-                >
-                    {isFetching ? <div className=" flex items-center gap-2"><Spinner /> Loading </div> : "Reload"}
-                </Button>
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                    <div className="border-b flex items-center justify-between border-gray-200 dark:border-gray-700 p-5 bg-gray-50/50 dark:bg-gray-800/50">
-                        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                            Certificate Details
-                        </h2>
-                        {
-                            user?.roles === "admin" && <button
-                                disabled={isPending}
-                                onClick={() => {
-                                    if (confirm("Are you sure you want to delete this DSC?")) {
-                                        mutate()
-                                    }
-                                }}
-                                className="text-red-500 cursor-pointer hover:text-red-700 disabled:opacity-50"
-                            >
-                                <Trash2 size={18} />
-                            </button>
-                        }
+                    {/* Header Section */}
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            DSC Management
+                        </h1>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                            View details and manage records for ID: {id}
+                        </p>
                     </div>
-
-                    <div className="p-6">
-                        {isPending ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-pulse">
-                                {[...Array(4)].map((_, i) => (
-                                    <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <DetailItem
-                                    icon={Building2}
-                                    label="Company Name"
-                                    value={getIdDsc?.dsc?.companyname}
-                                />
-                                <DetailItem
-                                    icon={User}
-                                    label="Holder Name"
-                                    value={getIdDsc?.dsc?.name}
-                                />
-                                <DetailItem
-                                    icon={Calendar}
-                                    label="Expiry Date"
-                                    value={getIdDsc?.dsc?.expirydate}
-                                />
-                                <DetailItem
-                                    icon={Box}
-                                    label="Box"
-                                    value={getIdDsc?.dsc?.group}
-                                />
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Actions Section */}
-                {!isPending && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {/* Wrapper for TakenCreate */}
-                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
-                                Record Taken
-                            </h3>
-                            <TakenCreate dscid={id} />
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => refetch()}
+                        disabled={isFetching}
+                    >
+                        {isFetching ? <div className=" flex items-center gap-2"><Spinner /> Loading </div> : "Reload"}
+                    </Button>
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <div className="border-b flex items-center justify-between border-gray-200 dark:border-gray-700 p-5 bg-gray-50/50 dark:bg-gray-800/50">
+                            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                                Certificate Details
+                            </h2>
+                            {
+                                user?.roles === "admin" && <button
+                                    disabled={isPending}
+                                    onClick={() => {
+                                        if (confirm("Are you sure you want to delete this DSC?")) {
+                                            mutate()
+                                        }
+                                    }}
+                                    className="text-red-500 cursor-pointer hover:text-red-700 disabled:opacity-50"
+                                >
+                                    <Trash2 size={18} />
+                                </button>
+                            }
                         </div>
 
-                        {/* Wrapper for UpdateReturn */}
-                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
-                                Update Return
-                            </h3>
-                            <UpdateReturn dscid={id} />
+                        <div className="p-6">
+                            {isPending ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-pulse">
+                                    {[...Array(4)].map((_, i) => (
+                                        <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <DetailItem
+                                        icon={Building2}
+                                        label="Company Name"
+                                        value={getIdDsc?.dsc?.companyname}
+                                    />
+                                    <DetailItem
+                                        icon={User}
+                                        label="Holder Name"
+                                        value={getIdDsc?.dsc?.name}
+                                    />
+                                    <DetailItem
+                                        icon={Calendar}
+                                        label="Expiry Date"
+                                        value={getIdDsc?.dsc?.expirydate}
+                                    />
+                                    <DetailItem
+                                        icon={Box}
+                                        label="Box"
+                                        value={getIdDsc?.dsc?.group}
+                                    />
+                                </div>
+                            )}
                         </div>
-
                     </div>
-                )}
+
+                    {/* Actions Section */}
+                    {!isPending && (
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* Wrapper for TakenCreate */}
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
+                                    Record Taken
+                                </h3>
+                                <TakenCreate dscid={id} />
+                            </div>
+
+                            {/* Wrapper for UpdateReturn */}
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
+                                    Update Return
+                                </h3>
+                                <UpdateReturn dscid={id} />
+                            </div>
+
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
+
     );
 };
 

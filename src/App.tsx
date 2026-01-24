@@ -5,6 +5,7 @@ import { Button } from "./components/ui/button"
 import useAuthEffect from "./components/useAuthEffect"
 import AuthManage from "./pages/Admin/AuthManage"
 import AuthPage from "./pages/Autrh/Auth"
+import DscDownload from "./pages/Dsc/DscDownload"
 import DscExpired from "./pages/Dsc/DscExpired"
 import GetDscById from "./pages/Dsc/GetDscById"
 import RegisterDsc from "./pages/Dsc/RegisterDsc"
@@ -12,7 +13,6 @@ import ViewDsc from "./pages/Dsc/ViewDsc"
 import Home from "./pages/Home/Home"
 import RegisterTransation from "./pages/Transaction/RegisterTransation"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
-import DscDownload from "./pages/Dsc/DscDownload"
 const App = () => {
 
   useAuthEffect();

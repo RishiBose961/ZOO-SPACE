@@ -4,12 +4,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import LoginForm from "./LoginForm"
 import RegisterForm from "./RegisterForm"
 import GhostIcon from "@/components/ui/ghost-icon"
+import { Helmet } from "react-helmet-async"
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState("login")
 
   return (
     <div className="  flex items-center justify-center p-4">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>ZOO SPACE | Authentication</title>
+      </Helmet>
       <div className="w-full max-w-md">
         {/* Logo/Branding */}
         <div className="text-center mb-8 mt-10">

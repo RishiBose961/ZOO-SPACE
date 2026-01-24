@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment"
+import { Helmet } from "react-helmet-async"
 
 const RegisterDsc = () => {
   const [open, setOpen] = useState(false)
@@ -105,6 +106,10 @@ const queryClient = useQueryClient();
 
   return (
     <Card className="w-full">
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>ZOO SPACE | Register DSC</title>
+      </Helmet>
       <CardHeader>
         <CardTitle>Register DSC</CardTitle>
         <CardDescription>
