@@ -1,28 +1,24 @@
 import { Route, Routes } from "react-router"
 import Navbar from "./components/Header/Navbar"
 import PrivateRoute from "./components/PrivateRoute"
+import { Button } from "./components/ui/button"
 import useAuthEffect from "./components/useAuthEffect"
 import AuthManage from "./pages/Admin/AuthManage"
 import AuthPage from "./pages/Autrh/Auth"
+import DscExpired from "./pages/Dsc/DscExpired"
 import GetDscById from "./pages/Dsc/GetDscById"
 import RegisterDsc from "./pages/Dsc/RegisterDsc"
 import ViewDsc from "./pages/Dsc/ViewDsc"
 import Home from "./pages/Home/Home"
+import RegisterTransation from "./pages/Transaction/RegisterTransation"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
-import { Button } from "./components/ui/button"
-import DscExpired from "./pages/Dsc/DscExpired"
-import { useEffect } from "react"
+import DscDownload from "./pages/Dsc/DscDownload"
 const App = () => {
 
   useAuthEffect();
 
   const { isUpdateAvailable, updateServiceWorker } = useServiceWorkerUpdater();
 
-    useEffect(() => {
-    if ("Notification" in window) {
-      Notification.requestPermission();
-    }
-  }, []);
 
   return (
     <div className="max-w-6xl mx-auto px-2">
@@ -45,6 +41,8 @@ const App = () => {
           <Route path="/auth-manage" element={<AuthManage />} />
           <Route path="/dsc/:id" element={<GetDscById />} />
           <Route path="/dsc-expiry" element={<DscExpired />} />
+          <Route path="/company-transaction" element={<RegisterTransation />} />
+          <Route path="/dsc-download" element={<DscDownload />} />
         </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />

@@ -62,11 +62,24 @@ const MainScreen = () => {
     },
     {
       id: 4,
+      name: "Company Transaction",
+      link: "/company-transaction",
+      madeNot: true,
+      authRequired: "admin",
+    },
+    {
+      id: 5,
       name: "Auth View & Manage",
       link: "/auth-manage",
       madeNot: true,
       authRequired: "admin",
     },
+    {
+      id: 6,
+      name: "DSC Download",
+      link: "/dsc-download",
+      madeNot: true,
+    }
   ];
 
   const visibleCards = cardData.filter((item) => {
@@ -100,7 +113,7 @@ const MainScreen = () => {
             ) : (
               <CardAction className="space-x-2">
                 <Link to={item.link}>
-                  <Button>
+                  <Button className=" cursor-pointer">
                     <Eye className="mr-2 h-4 w-4" />
                     View
                   </Button>
