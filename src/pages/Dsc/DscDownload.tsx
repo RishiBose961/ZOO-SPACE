@@ -12,6 +12,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Calendar1, Download, FileSpreadsheet, Hash, Layers, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 
 export default function DscDownload() {
@@ -153,6 +154,10 @@ export default function DscDownload() {
 
     return (
         <div className="flex items-center justify-center min-h-[70vh]  p-6 font-sans">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>ZOO SPACE | Report Export</title>
+            </Helmet>
             <div className="w-full max-w-lg bg-card rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
 
                 {/* Light Theme Header */}

@@ -68,6 +68,13 @@ const MainScreen = () => {
       authRequired: "admin",
     },
     {
+      id: 7,
+      name: "Company Transaction View",
+      link: "/company-transaction-view",
+      madeNot: true,
+      authRequired: "admin",
+    },
+    {
       id: 5,
       name: "Auth View & Manage",
       link: "/auth-manage",

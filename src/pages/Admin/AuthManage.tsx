@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import type { JSX } from "react/jsx-runtime";
 import UpdateAuth from "./UpdateAuth";
+import { Helmet } from "react-helmet";
 
 
 const AuthManage = () => {
@@ -32,6 +33,10 @@ const AuthManage = () => {
 
   return (
      <div className="w-full  rounded-md border bg-background">
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>ZOO SPACE | Auth Manage</title>
+      </Helmet>
         <Table>
           <TableHeader>
             <TableRow>

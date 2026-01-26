@@ -105,9 +105,12 @@ const GetDscById = () => {
         <>
             <Helmet>
                 <meta charSet="utf-8" />
-                <title> {`ZOO SPACE | ${getIdDsc?.dsc?.companyname}`}</title>
+                <title>
+                    ZOO SPACE | {getIdDsc?.dsc?.companyname ?? "Loading..."}
+                </title>
             </Helmet>
-            <div className="  p-3 transition-colors duration-300">
+
+            <div className="p-3 transition-colors duration-300">
                 <div className="space-y-8">
 
                     {/* Header Section */}
