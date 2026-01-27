@@ -61,20 +61,6 @@ const MainScreen = () => {
       madeNot: true,
     },
     {
-      id: 4,
-      name: "Company Transaction",
-      link: "/company-transaction",
-      madeNot: true,
-      authRequired: "admin",
-    },
-    {
-      id: 7,
-      name: "Company Transaction View",
-      link: "/company-transaction-view",
-      madeNot: true,
-      authRequired: "admin",
-    },
-    {
       id: 5,
       name: "Auth View & Manage",
       link: "/auth-manage",

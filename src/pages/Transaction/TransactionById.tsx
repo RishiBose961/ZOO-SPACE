@@ -4,9 +4,9 @@ import RegisterPayment from "@/components/PaymentInfo/RegisterPayment";
 import { useParams } from "react-router";
 
 const TransactionById = () => {
-    const {id} = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
 
-  const {isPending, getTransactionByid} = GetTransactionByid({id: id!}) as {
+  const { isPending, getTransactionByid } = GetTransactionByid({ id: id! }) as {
     isPending: boolean;
     getTransactionByid: {
       data: {
@@ -17,32 +17,32 @@ const TransactionById = () => {
         updatedAt: Date;
         fineAmount?: number;
       };
-    };  
+    };
   };
 
 
   return (
     <div>
-        <div>
+      <div>
         {isPending ? (
-            <p>Loading transaction details...</p>
+          <p>Loading transaction details...</p>
         ) : (
           <>
             <h1 className="text-2xl font-bold mb-4">Transaction Details</h1>
-            <div className="grid grid-cols-3">
-<p><strong>Company Name:</strong> {getTransactionByid?.data?.companyName}</p>
-            <p><strong>Transaction Name:</strong> {getTransactionByid?.data?.name}</p>
-            <p><strong>Payment Plan Type:</strong> {getTransactionByid?.data?.paymentPlanType}</p>
-            <p><strong>Updated At:</strong> {new Date(getTransactionByid?.data?.updatedAt).toLocaleDateString()}</p>
-            <p><strong>Fine Amount:</strong> ₹ {getTransactionByid?.data?.fineAmount?.toLocaleString("en-IN") || 0}</p>
+            <div className="grid lg:grid-cols-3 grid-cols-1 text-sm gap-3 mb-3 bg-card p-4 rounded-3xl">
+              <p><strong>Company Name:</strong> {getTransactionByid?.data?.companyName}</p>
+              <p><strong>Transaction Name:</strong> {getTransactionByid?.data?.name}</p>
+              <p><strong>Payment Plan Type:</strong> {getTransactionByid?.data?.paymentPlanType}</p>
+              <p><strong>Updated At:</strong> {new Date(getTransactionByid?.data?.updatedAt).toLocaleDateString()}</p>
+              <p><strong>Fine Amount:</strong> ₹ {getTransactionByid?.data?.fineAmount?.toLocaleString("en-IN") || 0}</p>
             </div>
-            
+
           </>)}
-        </div>
-        
-        <RegisterPayment/>
-        <h1 className="mt-5 mb-5">View Transaction</h1>
-        <PaymentDetails/>
+      </div>
+
+      <RegisterPayment />
+      <h1 className="mt-5 mb-5">View Transaction</h1>
+      <PaymentDetails />
     </div>
   )
 }

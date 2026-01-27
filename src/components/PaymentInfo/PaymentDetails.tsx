@@ -58,6 +58,8 @@ const PaymentDetails = () => {
     const payments = data?.data || []
     const pagination = data?.pagination
 
+
+
     return (
         <div className="space-y-4">
             <ExampleUnderstand />

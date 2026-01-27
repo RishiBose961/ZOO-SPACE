@@ -172,11 +172,7 @@ export default function SideBar() {
           </Table>
         </div>
       </>}
-      <div>
-        <h2 className="text-xl font-semibold">
-         Total Number DSC
-        </h2>
-      </div>
+    
 
     </div>
   );

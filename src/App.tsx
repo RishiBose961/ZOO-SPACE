@@ -11,10 +11,7 @@ import GetDscById from "./pages/Dsc/GetDscById"
 import RegisterDsc from "./pages/Dsc/RegisterDsc"
 import ViewDsc from "./pages/Dsc/ViewDsc"
 import Home from "./pages/Home/Home"
-import RegisterTransation from "./pages/Transaction/RegisterTransation"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
-import ViewTransaction from "./pages/Transaction/ViewTransaction"
-import TransactionById from "./pages/Transaction/TransactionById"
 const App = () => {
 
   useAuthEffect();
@@ -43,10 +40,11 @@ const App = () => {
           <Route path="/auth-manage" element={<AuthManage />} />
           <Route path="/dsc/:id" element={<GetDscById />} />
           <Route path="/dsc-expiry" element={<DscExpired />} />
-          <Route path="/company-transaction" element={<RegisterTransation />} />
+          
           <Route path="/dsc-download" element={<DscDownload />} />
+          {/* <Route path="/company-transaction" element={<RegisterTransation />} />
           <Route path="/company-transaction-view" element={<ViewTransaction />} />
-          <Route path="/company-transaction/:id" element={<TransactionById />} />
+          <Route path="/company-transaction/:id" element={<TransactionById />} /> */}
         </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />

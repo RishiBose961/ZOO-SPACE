@@ -11,7 +11,7 @@ import { Edit2 } from "lucide-react"
 const UpdateDetails = () => {
     return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
                 <Button variant="outline" className="text-blue-600"><Edit2/></Button>
             </DialogTrigger>
             <DialogContent>
