@@ -42,9 +42,6 @@ const App = () => {
           <Route path="/dsc-expiry" element={<DscExpired />} />
           
           <Route path="/dsc-download" element={<DscDownload />} />
-          {/* <Route path="/company-transaction" element={<RegisterTransation />} />
-          <Route path="/company-transaction-view" element={<ViewTransaction />} />
-          <Route path="/company-transaction/:id" element={<TransactionById />} /> */}
         </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />
