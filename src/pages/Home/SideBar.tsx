@@ -135,7 +135,7 @@ export default function SideBar() {
       )}
       {isLoading ? (
         <div className="text-muted-foreground">
-          <Example  data="Expiring DSC Records"/>
+          <Example data="Expiring DSC Records" />
         </div>
       ) : <>
         <div className="border rounded-lg overflow-x-auto">
@@ -154,7 +154,7 @@ export default function SideBar() {
                   <TableCell><Link to={`/dsc/${item._id}`}>{item.companyname.slice(0, 15)}.. </Link></TableCell>
                   <TableCell>{item.group}</TableCell>
                   <TableCell>{item.expirydate}</TableCell>
-              
+
                 </TableRow>
               ))}
 
@@ -172,7 +172,11 @@ export default function SideBar() {
           </Table>
         </div>
       </>}
-
+      <div>
+        <h2 className="text-xl font-semibold">
+         Total Number DSC
+        </h2>
+      </div>
 
     </div>
   );

@@ -27,14 +27,14 @@ type Transaction = {
     companyName: string
     name: string
     paymentPlanType: string
-    dueDate: string
+    fineAmount: number
 }
 
 const emptyTransaction: Transaction = {
     companyName: "",
     name: "",
     paymentPlanType: "",
-    dueDate: "",
+    fineAmount: 0,
 }
 
 const RegisterTransation = () => {
@@ -81,10 +81,20 @@ const RegisterTransation = () => {
     const handleChange = (
         index: number,
         field: keyof Transaction,
-        value: string
+        value: string | number
     ) => {
         const updated = [...transactions]
-        updated[index][field] = value
+        if (field === "fineAmount") {
+            updated[index] = {
+                ...updated[index],
+                fineAmount: Number(value),
+            }
+        } else {
+            updated[index] = {
+                ...updated[index],
+                [field]: value,
+            } as Transaction
+        }
         setTransactions(updated)
     }
 
@@ -146,7 +156,7 @@ const RegisterTransation = () => {
                                     <Label>Company Name</Label>
                                     <Input
                                         className="uppercase"
-                                         placeholder="Enter your Company Name"
+                                        placeholder="Enter your Company Name"
                                         value={tx.companyName}
                                         onChange={(e) =>
                                             handleChange(
@@ -203,22 +213,22 @@ const RegisterTransation = () => {
                                         </SelectContent>
                                     </Select>
                                 </div>
-
                                 <div className="space-y-1">
-                                    <Label>Due Date</Label>
+                                    <Label>Fine Amount</Label>
                                     <Input
-                                        type="date"
-                                        value={tx.dueDate}
+                                        value={tx.fineAmount}
+                                        placeholder="Enter your fineAmount "
                                         onChange={(e) =>
                                             handleChange(
                                                 index,
-                                                "dueDate",
+                                                "fineAmount",
                                                 e.target.value
                                             )
                                         }
                                         required
                                     />
                                 </div>
+
                             </div>
                         ))}
                         <div className="flex justify-center space-x-5">

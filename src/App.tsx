@@ -14,6 +14,7 @@ import Home from "./pages/Home/Home"
 import RegisterTransation from "./pages/Transaction/RegisterTransation"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
 import ViewTransaction from "./pages/Transaction/ViewTransaction"
+import TransactionById from "./pages/Transaction/TransactionById"
 const App = () => {
 
   useAuthEffect();
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/company-transaction" element={<RegisterTransation />} />
           <Route path="/dsc-download" element={<DscDownload />} />
           <Route path="/company-transaction-view" element={<ViewTransaction />} />
+          <Route path="/company-transaction/:id" element={<TransactionById />} />
         </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />
