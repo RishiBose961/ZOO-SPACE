@@ -12,6 +12,7 @@ import RegisterDsc from "./pages/Dsc/RegisterDsc"
 import ViewDsc from "./pages/Dsc/ViewDsc"
 import Home from "./pages/Home/Home"
 import { useServiceWorkerUpdater } from "./useServiceWorkerUpdater"
+import BreadCrumb from "./components/BreadCrumb/BreadCrumb"
 const App = () => {
 
   useAuthEffect();
@@ -23,7 +24,8 @@ const App = () => {
     <div className="max-w-6xl mx-auto px-2">
       <Navbar />
 
-
+      <BreadCrumb/>
+      
       {isUpdateAvailable && (
         <div className="update-popup">
           <p>A new version is available. Update now?</p>
