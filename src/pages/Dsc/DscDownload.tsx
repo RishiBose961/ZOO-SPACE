@@ -59,9 +59,12 @@ export default function DscDownload() {
         },
     });
 
+    
+    
     const handleDownload = async () => {
         try {
             const result = await refetch();
+
             const rows = result.data;
 
             if (!rows || rows.length === 0) {
@@ -92,17 +95,19 @@ export default function DscDownload() {
             doc.setDrawColor(220, 220, 220);
             doc.line(14, 34, pageWidth - 14, 34);
 
-            const tableColumn = ["SNo", "Company Name", "Name", "Group", "Created At"];
+            const tableColumn = ["SNo", "Company Name", "Name", "Group","expirydate", "Created At"];
             const tableRows = rows.map((item: {
                 companyname: string;
                 name: string;
                 group: string;
+                expirydate: string;
                 createdAt: string;
             }, index: number) => [
                     index + 1.,
                     item.companyname || "-",
                     item.name || "-",
                     item.group || "-",
+                    item.expirydate.replace(/-/g, "/") || "-",
                     item.createdAt ? new Date(item.createdAt).toLocaleDateString() : "-",
                 ]);
 
