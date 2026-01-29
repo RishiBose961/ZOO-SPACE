@@ -172,7 +172,7 @@ const ViewDsc = () => {
             border-gray-100 
             dark:border-gray-700 ">
                       <div className="flex space-x-2">
-                        <Link to={`/dsc/${post._id}`} className="flex space-x-2 items-center p-2 rounded-full hover:bg-amber-200/60"><Eye /> <span>View</span></Link>
+                        <Link to={`/dsc-manage/${post._id}`} className="flex space-x-2 items-center p-2 rounded-full hover:bg-amber-200/60"><Eye /> <span>View</span></Link>
 
 
                       </div>

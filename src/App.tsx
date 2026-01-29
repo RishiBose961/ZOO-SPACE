@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/dsc-register" element={<RegisterDsc />} />
           <Route path="/dsc-manage" element={<ViewDsc />} />
           <Route path="/auth-manage" element={<AuthManage />} />
-          <Route path="/dsc/:id" element={<GetDscById />} />
+          <Route path="/dsc-manage/:id" element={<GetDscById />} />
           <Route path="/dsc-expiry" element={<DscExpired />} />
           
           <Route path="/dsc-download" element={<DscDownload />} />

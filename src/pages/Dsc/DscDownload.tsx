@@ -1,4 +1,5 @@
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
+import UseCountHook from "@/components/hook/DscHook/UseCountHook";
 import {
     Select,
     SelectContent,
@@ -14,6 +15,7 @@ import { Calendar1, Download, FileSpreadsheet, Hash, Layers, Loader2 } from "luc
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
+import type { JSX } from "react/jsx-runtime";
 
 export default function DscDownload() {
     const [group, setGroup] = useState("");
@@ -34,6 +36,20 @@ export default function DscDownload() {
     );
 
     const { base_url } = CheckEnvironment();
+
+    const { isPending, getCountData } = UseCountHook() as {
+        isPending: boolean;
+        getCountData: {
+            map(arg0: (item: {
+                group: string;
+                count: number;
+            }, index: number) => JSX.Element): import("react").ReactNode;
+            all: number;
+            group: number;
+            range: number;
+        }
+    }
+
 
     const { refetch, isFetching } = useQuery({
         queryKey: ["dsc-pdf-download"],
@@ -59,8 +75,8 @@ export default function DscDownload() {
         },
     });
 
-    
-    
+
+
     const handleDownload = async () => {
         try {
             const result = await refetch();
@@ -95,7 +111,7 @@ export default function DscDownload() {
             doc.setDrawColor(220, 220, 220);
             doc.line(14, 34, pageWidth - 14, 34);
 
-            const tableColumn = ["SNo", "Company Name", "Name", "Group","expirydate", "Created At"];
+            const tableColumn = ["SNo", "Company Name", "Name", "Group", "expirydate", "Created At"];
             const tableRows = rows.map((item: {
                 companyname: string;
                 name: string;
@@ -157,142 +173,177 @@ export default function DscDownload() {
         }
     };
 
+    if (isPending) return <div>Loading...</div>;
     return (
-        <div className="flex items-center justify-center min-h-[70vh]  p-6 font-sans">
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>ZOO SPACE | Report Export</title>
-            </Helmet>
-            <div className="w-full max-w-lg bg-card rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <>
+            <div className="flex items-center justify-center p-6 font-sans">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>ZOO SPACE | Report Export</title>
+                </Helmet>
+                <div className="w-full max-w-lg bg-card rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
 
-                {/* Light Theme Header */}
-                <div className="px-8 pt-8 pb-4">
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <h2 className="text-2xl font-bold tracking-tight">Report Export</h2>
-                            <p className=" mt-1 text-sm">Download your DSC data as PDF</p>
-                        </div>
-                        <div className="p-3 bg-blue-50 rounded-xl">
-                            <FileSpreadsheet className="w-6 h-6 text-blue-600" />
+                    {/* Light Theme Header */}
+                    <div className="px-8 pt-8 pb-4">
+                        <div className="flex items-start justify-between">
+                            <div>
+                                <h2 className="text-2xl font-bold tracking-tight">Report Export</h2>
+                                <p className=" mt-1 text-sm">Download your DSC data as PDF</p>
+                            </div>
+                            <div className="p-3 bg-blue-50 rounded-xl">
+                                <FileSpreadsheet className="w-6 h-6 text-blue-600" />
+                            </div>
                         </div>
                     </div>
+
+                    {/* Form Body */}
+                    <div className="p-8 pt-2 space-y-6">
+
+                        {/* Group Input */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold  uppercase tracking-wide flex items-center gap-2">
+                                <Layers className="w-3.5 h-3.5" />
+                                Filter by Group
+                            </label>
+                            <Select
+                                value={group}
+                                onValueChange={(val) => {
+                                    if (val === "all") {
+                                        setGroup("");
+                                    } else {
+                                        setGroup(val);
+                                    }
+                                }}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select Group (optional)" />
+                                </SelectTrigger>
+
+                                <SelectContent>
+                                    <SelectItem value="all">All</SelectItem>
+                                    <SelectItem value="A">A</SelectItem>
+                                    <SelectItem value="B">B</SelectItem>
+                                    <SelectItem value="C">C</SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                            <label className="text-xs pt-3 font-semibold  uppercase tracking-wide flex items-center gap-2">
+                                <Calendar1 className="w-3.5 h-3.5" />
+                                Filter by Date Range
+                            </label>
+                            <div className="p-1.5  rounded-xl flex items-center border border-gray-100">
+                                <button
+                                    onClick={() => setMode("all")}
+                                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-lg
+                     transition-all duration-200 ${mode === "all"
+                                            ? " shadow-sm border border-gray-200/50"
+                                            : " hover:text-red-400"
+                                        }`}
+                                >
+                                    All Records
+                                </button>
+                                <button
+                                    onClick={() => setMode("range")}
+                                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 ${mode === "range"
+                                        ? "bg-white text-gray-900 shadow-sm border border-gray-200/50"
+                                        : " hover:text-red-400"
+                                        }`}
+                                >
+                                    Custom Range
+                                </button>
+                            </div>
+                        </div>
+
+                        {mode === "range" && (
+                            <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-1 duration-200">
+                                <div className="space-y-1.5">
+                                    <label className="text-xs  font-medium ml-1">From ID</label>
+                                    <div className="relative">
+                                        <Hash className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                                        <input
+                                            type="number"
+                                            placeholder="0"
+                                            className="w-full pl-9 pr-4 py-2.5 text-black bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
+                                            value={from}
+                                            onChange={(e) => setFrom(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-xs  font-medium ml-1">To ID</label>
+                                    <div className="relative">
+                                        <Hash className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                                        <input
+                                            type="number"
+                                            placeholder="100"
+                                            className="w-full pl-9 pr-4 py-2.5 text-black bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
+                                            value={to}
+                                            onChange={(e) => setTo(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Download Button */}
+                        <div className="pt-2">
+                            <button
+                                onClick={handleDownload}
+                                disabled={isFetching}
+                                className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold transition-all duration-200 shadow-sm ${isFetching
+                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                    : 'bg-gray-900 text-white hover:bg-black hover:shadow-md active:transform active:scale-[0.99]'
+                                    }`}
+                            >
+                                {isFetching ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                        <span>Processing...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Download className="w-4 h-4" />
+                                        <span>Download PDF</span>
+                                    </>
+                                )}
+                            </button>
+                        </div>
+
+
+                    </div>
+
                 </div>
 
-                {/* Form Body */}
-                <div className="p-8 pt-2 space-y-6">
-
-                    {/* Group Input */}
-                    <div className="space-y-2">
-                        <label className="text-xs font-semibold  uppercase tracking-wide flex items-center gap-2">
-                            <Layers className="w-3.5 h-3.5" />
-                            Filter by Group
-                        </label>
-                        <Select
-                            value={group}
-                            onValueChange={(val) => {
-                                if (val === "all") {
-                                    setGroup("");
-                                } else {
-                                    setGroup(val);
-                                }
-                            }}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select Group (optional)" />
-                            </SelectTrigger>
-
-                            <SelectContent>
-                                <SelectItem value="all">All</SelectItem>
-                                <SelectItem value="A">A</SelectItem>
-                                <SelectItem value="B">B</SelectItem>
-                                <SelectItem value="C">C</SelectItem>
-                            </SelectContent>
-                        </Select>
-
-                        <label className="text-xs pt-3 font-semibold  uppercase tracking-wide flex items-center gap-2">
-                            <Calendar1 className="w-3.5 h-3.5" />
-                            Filter by Date Range
-                        </label>
-                        <div className="p-1.5  rounded-xl flex items-center border border-gray-100">
-                            <button
-                                onClick={() => setMode("all")}
-                                className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-lg
-                     transition-all duration-200 ${mode === "all"
-                                        ? " shadow-sm border border-gray-200/50"
-                                        : " hover:text-red-400"
-                                    }`}
-                            >
-                                All Records
-                            </button>
-                            <button
-                                onClick={() => setMode("range")}
-                                className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 ${mode === "range"
-                                    ? "bg-white text-gray-900 shadow-sm border border-gray-200/50"
-                                    : " hover:text-red-400"
-                                    }`}
-                            >
-                                Custom Range
-                            </button>
-                        </div>
-                    </div>
-
-                    {mode === "range" && (
-                        <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-1 duration-200">
-                            <div className="space-y-1.5">
-                                <label className="text-xs  font-medium ml-1">From ID</label>
-                                <div className="relative">
-                                    <Hash className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                                    <input
-                                        type="number"
-                                        placeholder="0"
-                                        className="w-full pl-9 pr-4 py-2.5 text-black bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
-                                        value={from}
-                                        onChange={(e) => setFrom(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                            <div className="space-y-1.5">
-                                <label className="text-xs  font-medium ml-1">To ID</label>
-                                <div className="relative">
-                                    <Hash className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                                    <input
-                                        type="number"
-                                        placeholder="100"
-                                        className="w-full pl-9 pr-4 py-2.5 text-black bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
-                                        value={to}
-                                        onChange={(e) => setTo(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Download Button */}
-                    <div className="pt-2">
-                        <button
-                            onClick={handleDownload}
-                            disabled={isFetching}
-                            className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold transition-all duration-200 shadow-sm ${isFetching
-                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-gray-900 text-white hover:bg-black hover:shadow-md active:transform active:scale-[0.99]'
-                                }`}
-                        >
-                            {isFetching ? (
-                                <>
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                    <span>Processing...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <Download className="w-4 h-4" />
-                                    <span>Download PDF</span>
-                                </>
-                            )}
-                        </button>
-                    </div>
-
+            </div>
+          <div className="p-6 ">
+    {/* Grid Layout: 1 column on mobile, up to 4 on large screens */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {getCountData?.map((item :{
+            group: string;
+            count: number;
+        }, index: number) => (
+            <div 
+                key={index} 
+                className="bg-card p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200"
+            >
+          
+                <h3 className="text-sm font-medium  uppercase tracking-wider mb-2">
+                    {item.group}
+                </h3>
+                
+                {/* Value */}
+                <div className="flex items-baseline">
+                    <span className="text-3xl font-bold ">
+                        {item.count}
+                    </span>
+                    <span className="ml-2 text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                        DSC
+                    </span>
                 </div>
             </div>
-        </div>
+        ))}
+    </div>
+</div>
+        </>
     );
 }
