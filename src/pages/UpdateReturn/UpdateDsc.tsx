@@ -58,7 +58,8 @@ const UpdateDsc = ({ dscid }: { dscid: string | undefined }) => {
             return res.data
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["posts"] })
+            queryClient.invalidateQueries({ queryKey: ["getIdDscs"] })
+            alert("DSC updated successfully")
         },
     })
 

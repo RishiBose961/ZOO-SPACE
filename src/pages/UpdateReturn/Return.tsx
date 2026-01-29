@@ -43,6 +43,7 @@ const Return = ({ dscid }: { dscid: string | undefined }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getTakenDatas"] })
+      alert("DSC returned successfully")
       setName("")
       setContact("")
     },

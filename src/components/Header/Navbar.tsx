@@ -17,7 +17,7 @@ const Navbar = () => {
     <header className="w-full">
       <div className="max-w-7xl mx-auto py-4 flex items-center justify-between">
         <Link to="/" className="flex space-x-2 items-center">
-          <GhostIcon className="size-8" /><h1 className="text-lg font-semibold">ZOO SPACE</h1>
+          <GhostIcon className="size-8 rotate-15" /><h1 className="text-lg font-semibold">ZOO SPACE</h1>
         </Link>
         <div className="flex items-center space-x-4">
           {isAuthenticated &&
