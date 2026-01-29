@@ -151,7 +151,7 @@ export default function SideBar() {
             <TableBody>
               {data?.data?.map((item: Taken) => (
                 <TableRow key={item._id}>
-                  <TableCell><Link to={`/dsc/${item._id}`}>{item.companyname.slice(0, 15)}.. </Link></TableCell>
+                  <TableCell><Link to={`/dsc-manage/${item._id}`}>{item.companyname.slice(0, 15)}.. </Link></TableCell>
                   <TableCell>{item.group}</TableCell>
                   <TableCell>{item.expirydate}</TableCell>
 

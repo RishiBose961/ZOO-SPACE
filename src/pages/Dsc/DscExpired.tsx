@@ -59,7 +59,7 @@ const DscExpired = () => {
                                     {dsc.group}
                                 </TableCell>
                                 <TableCell className="font-medium">
-                                    <Link className=" hover:bg-amber-700 p-2 rounded-full" to={`/dsc/${dsc._id}`}>View Details</Link>
+                                    <Link className=" hover:bg-amber-700 p-2 rounded-full" to={`/dsc-manage/${dsc._id}`}>View Details</Link>
                                 </TableCell>
                             </TableRow>
                         ))}

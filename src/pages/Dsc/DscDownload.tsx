@@ -1,5 +1,6 @@
 import CheckEnvironment from "@/CheckEnvironment/CheckEnvironment";
 import UseCountHook from "@/components/hook/DscHook/UseCountHook";
+import Example from "@/components/spinner-inline-4";
 import {
     Select,
     SelectContent,
@@ -173,7 +174,7 @@ export default function DscDownload() {
         }
     };
 
-    if (isPending) return <div>Loading...</div>;
+    if (isPending) return <div className="flex justify-center mt-5"><Example data="Report Export" /></div>;
     return (
         <>
             <div className="flex items-center justify-center p-6 font-sans">
@@ -328,7 +329,7 @@ export default function DscDownload() {
             >
           
                 <h3 className="text-sm font-medium  uppercase tracking-wider mb-2">
-                    {item.group}
+                    BOX : {item.group}
                 </h3>
                 
                 {/* Value */}
